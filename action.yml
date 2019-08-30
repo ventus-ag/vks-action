@@ -1,10 +1,30 @@
-name: 'Node 12 Template Action'
-description: 'Get started with Node actions'
-author: 'GitHub'
+name: 'VKS: set context and kubectl run'
+description: 'setup KUBECONFIG for your VKS cluster'
+author: 'Ventus Cloud'
 inputs:
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+  authUrl:
+    description: 'authorization url'
+    required: true
+  projectName:
+    description: 'project name'
+    required: true
+  domainName:
+    description: 'domain name'
+    required: true
+    default: 'default'
+  userName:
+    description: 'user name'
+    required: true
+  userDomainName:
+    description: 'user domain name'
+    required: true
+    default: 'Default'
+  userPassword:
+    description: 'user password'
+    required: true
+  clusterName:
+    description: 'cluster name'
+    required: true
 runs:
   using: 'node12'
   main: 'lib/main.js'
