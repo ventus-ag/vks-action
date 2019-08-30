@@ -1,9 +1,15 @@
-# JavaScript Action Template
+# Ventus Kubernetes Service GitHub Action
 
-This template offers an easy way to get started writing a JavaScript action with TypeScript compile time support, unit testing with Jest and using the GitHub Actions Toolkit.
+Used for setting the target VKS cluster context which will be used by any [kubectl] (https://kubernetes.io/docs/reference/kubectl/overview/) commands.
 
-## Getting Started
-
-See the walkthrough located [here](https://github.com/actions/toolkit/blob/master/docs/javascript-action.md).
-
-In addition to walking your through how to create an action, it also provides strategies for versioning, releasing and referencing your actions.
+```yaml
+      uses: ventus-ag/vks-action@master
+      with: 
+        authUrl: ${{ secrets.AUTHURL }}
+        projectName: ${{ secrets.PROJECTNAME }}
+        domainName: ${{ secrets.DOMAINNAME }}
+        userName: ${{ secrets.USERNAME }}
+        userDomainName: ${{ secrets.USERDOMAINNAME }}
+        userPassword: ${{ secrets.USERPASSWORD }}
+        clusterName: ${{ secrets.CLUSTERNAME }}
+```
