@@ -6,7 +6,7 @@ Used for setting the target VKS cluster context which will be used by any [kubec
       uses: ventus-ag/vks-action@master
       with: 
         authUrl: ${{ secrets.AUTHURL }}
-        projectName: ${{ secrets.PROJECTNAME }}
+        projectDomainName: ${{ secrets.PROJECTDOMAINNAME }}
         domainName: ${{ secrets.DOMAINNAME }}
         userName: ${{ secrets.USERNAME }}
         userDomainName: ${{ secrets.USERDOMAINNAME }}
