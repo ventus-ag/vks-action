@@ -7,7 +7,7 @@ Used for setting the target VKS cluster context which will be used by any [kubec
       with: 
         authUrl: ${{ secrets.AUTHURL }}
         projectName: ${{ secrets.PROJECTNAME }}
-        domainName: ${{ secrets.DOMAINNAME }}
+        projectDomainName: ${{ secrets.PROJECTDOMAINNAME }}
         userName: ${{ secrets.USERNAME }}
         userDomainName: ${{ secrets.USERDOMAINNAME }}
         userPassword: ${{ secrets.USERPASSWORD }}
