@@ -26,6 +26,8 @@ async function runOpenstackClusterConfig() {
     const toolRunner = new ToolRunner(openstackPath, args, { failOnStdErr: false, ignoreReturnCode: true, silent: true });
     core.debug(`openstack coe cluster config`);    
     await toolRunner.exec();
+    core.exportVariable('KUBECONFIG', './config');
+    await exec.exec('kubectl cluster-info');
 }
 
 async function exportKubeconfig() {
@@ -54,9 +56,12 @@ async function run() {
     await pipInstall(args);
     args = ['install', 'python-magnumclient'];
     await pipInstall(args);
+    setTimeout(function(){
+    //do what you need here
+    }, 2000);
     await runOpenstackClusterConfig()
-    await exportKubeconfig();
-    await kubectl();
+    //await exportKubeconfig();
+    //await kubectl();
 }
 
 run();
