@@ -8,7 +8,7 @@ inputs:
   projectName:
     description: 'project name'
     required: true
-  domainName:
+  projectDomainName:
     description: 'domain name'
     required: true
     default: 'default'
