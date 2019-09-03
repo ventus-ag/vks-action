@@ -9,7 +9,7 @@ inputs:
     description: 'project name'
     required: true
   projectDomainName:
-    description: 'domain name'
+    description: 'project domain name'
     required: true
     default: 'default'
   userName:
