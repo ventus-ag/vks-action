@@ -33,7 +33,7 @@ async function pipInstall() {
     core.debug(`pip install python-magnumclient`);
     
     let args4 = ['coe', 'cluster', 'config', clusterName, '--os-auth-url', authUrl, '--os-identity-api-version', '3', '--os-project-name', projectName, '--os-project-domain-name', projectDomainName, '--os-username', userName, '--os-user-domain-name', userDomainName, '--os-password', userPassword];
-    const toolRunner4 = new ToolRunner(openstackPath, args4, { failOnStdErr: true, ignoreReturnCode: true, silent: true });
+    const toolRunner4 = new ToolRunner(openstackPath, args4, { failOnStdErr: true, ignoreReturnCode: false, silent: true });
     await toolRunner4.exec();
     core.debug(`openstack coe cluster config`);    
     }
