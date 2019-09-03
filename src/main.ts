@@ -3,65 +3,54 @@ import { ToolRunner, argStringToArray } from "@actions/exec/lib/toolrunner";
 
 const exec = require('@actions/exec');
 
-async function runOpenstackClusterConfig() {
-    const userName = core.getInput('userName', { required: true });
-    const authUrl = core.getInput('authUrl', { required: true });
+async function pipInstall() {
+    const userName = core.getInput('userName');
+    const authUrl = core.getInput('authUrl');
     const projectDomainName = core.getInput('projectDomainName');
-    const userPassword = core.getInput('userPassword', { required: true });
+    const userPassword = core.getInput('userPassword');
     const userDomainName = core.getInput('userDomainName');
-    const projectName = core.getInput('projectName', { required: true });
-    const clusterName = core.getInput('clusterName', { required: true });
+    const projectName = core.getInput('projectName');
+    const clusterName = core.getInput('clusterName');
 
+
+    let args1 = ['install', 'wheel'];
+    let pipPath = "pip";
     let openstackPath = "openstack";
+
+    const toolRunner1 = new ToolRunner(pipPath, args1);
+    await toolRunner1.exec();
+    core.debug(`pip install wheel`);
+
+
+    let args2 = ['install', 'python-openstackclient'];
+    const toolRunner2 = new ToolRunner(pipPath, args2);
+    await toolRunner2.exec();
+    core.debug(`pip install openstack-client`);
+
+    let args3 = ['install', 'python-magnumclient'];
+    const toolRunner3 = new ToolRunner(pipPath, args3);
+    await toolRunner3.exec();
+    core.debug(`pip install python-magnumclient`);
     
-    let args = ['coe', 'cluster', 
-    'config', clusterName, 
-    '--os-auth-url', authUrl, 
-    '--os-identity-api-version', '3', 
-    '--os-project-name', projectName, 
-    '--os-project-domain-name', projectDomainName, 
-    '--os-username', userName, 
-    '--os-user-domain-name', userDomainName, 
-    '--os-password', userPassword];
-    const toolRunner = new ToolRunner(openstackPath, args, { failOnStdErr: false, ignoreReturnCode: true, silent: true });
+    let args4 = ['coe', 'cluster', 'config', clusterName, '--os-auth-url', authUrl, '--os-identity-api-version', '3', '--os-project-name', projectName, '--os-project-domain-name', projectDomainName, '--os-username', userName, '--os-user-domain-name', userDomainName, '--os-password', userPassword];
+    const toolRunner4 = new ToolRunner(openstackPath, args4, { failOnStdErr: false, ignoreReturnCode: true, silent: true });
+        await toolRunner4.exec();
     core.debug(`openstack coe cluster config`);    
-    await toolRunner.exec();
-    core.exportVariable('KUBECONFIG', './config');
-    await exec.exec('kubectl cluster-info');
-}
+    }
 
 async function exportKubeconfig() {
     core.exportVariable('KUBECONFIG', './config');
-}
-
-async function pipInstall(args: string[]) {
-    const pipPath = "pip";
-    const toolRunner = new ToolRunner(pipPath, args, { silent: true });
-    core.debug(`pip install ` + args[1]);
-    const code = await toolRunner.exec();
-    if (code != 0) {
-        throw new Error(args[1] + ' installation failed.')
-    }
-}
+  }
 
 // test run: kubectl cluster-info
 async function kubectl() {
     await exec.exec('kubectl cluster-info');
-}
+    }
 
 async function run() {
-    let args = ['install', 'wheel'];
-    await pipInstall(args);
-    args = ['install', 'python-openstackclient'];
-    await pipInstall(args);
-    args = ['install', 'python-magnumclient'];
-    await pipInstall(args);
-    setTimeout(function(){
-    //do what you need here
-    }, 2000);
-    await runOpenstackClusterConfig()
-    //await exportKubeconfig();
-    //await kubectl();
+    await pipInstall();
+    await exportKubeconfig();
+    await kubectl();
 }
 
 run();
